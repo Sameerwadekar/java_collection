@@ -1,0 +1,7 @@
+List:
+ArrayList : 
+1.Dynamic size 
+2.extends List interface
+3.grow 1.5 of it size
+4.size refers do the number of element there and capicity refers to the how many element it can store 
+5.By default size is 10 
