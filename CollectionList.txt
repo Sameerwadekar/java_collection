@@ -5,3 +5,19 @@ ArrayList :
 3.grow 1.5 of it size
 4.size refers do the number of element there and capicity refers to the how many element it can store 
 5.By default size is 10 
+6.Best for searching slow insertion and deletion.
+
+LinkedList:
+1.store value and address of next node single Linked list and Double Link list.
+2.Best for Insertion and Deletion Slow Search operation. 
+3.had Add first and add last method which make insertion fast.
+
+Vector:
+1.Legacy lass which comes under List interface.
+2.synchronise unlike ArrayList and LinkList and are not threadSafe.
+3.by deafutl size 10 unlike arrayList it grow 2 times of it size.
+
+Stack:
+1.Since Stack extends vector it is synchronise.
+2.Follow LIFO i.e Last in First Out.
+
