@@ -1,5 +1,5 @@
 List:
-ArrayList : 
+Array List : 
 1.Dynamic size 
 2.extends List interface
 3.grow 1.5 of it size
@@ -13,11 +13,23 @@ LinkedList:
 3.had Add first and add last method which make insertion fast.
 
 Vector:
-1.Legacy lass which comes under List interface.
+1.Legacy class which comes under List interface.
 2.synchronise unlike ArrayList and LinkList and are not threadSafe.
-3.by deafutl size 10 unlike arrayList it grow 2 times of it size.
+3.by deafult size 10 unlike arrayList it grow 2 times of it size.
 
 Stack:
 1.Since Stack extends vector it is synchronise.
 2.Follow LIFO i.e Last in First Out.
+3. pop to remove last element, peek to see first element, push to add element in it.
+
+CopyOnWriteArrayList:
+1.Thread safe version on ArrayList.
+2.slower insertion and deletion faster searching as it make copy of List then modify it then merge it.
+
+
+
+  
+
+
+
 
