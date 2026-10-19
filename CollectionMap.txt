@@ -1,0 +1,202 @@
+Java Map Interface – Notes
+Map Interface :
+1.Stores data in key-value pairs.
+2.Each key must be unique, but values can be duplicated.
+3.Each key maps to at most one value.
+4.Map is part of the java.util package.
+5.Map does not extend the Collection interface.
+Common implementations: HashMap, LinkedHashMap, TreeMap, Hashtable, and ConcurrentHashMap.
+
+HashMap:
+1.Stores data in key-value pairs.
+2.Implements the Map interface.
+3.Internally uses a hash table, with buckets that can contain nodes.
+4.Allows one null key and multiple null values.
+5.Does not guarantee insertion order.
+6.Average time complexity for put(), get(), and remove() is O(1).
+7.Not synchronized; not thread-safe by default.
+8.When collisions occur, multiple keys can be stored in the same bucket.
+9.In modern Java implementations, heavily populated buckets can be converted from linked nodes to balanced trees under certain conditions.
+10.Default initial capacity is 16, and the default load factor is 0.75.
+11.When the threshold is exceeded, the hash table typically resizes, usually doubling its capacity.
+
+Internal Working of HashMap
+1.When put(key, value) is called, HashMap calculates the key's hashCode().
+2.It processes the hash value to calculate the bucket index in the internal array.
+3.If the bucket is empty, HashMap creates a new node to store the key-value pair.
+4.If the bucket already contains entries, HashMap compares hash values and uses equals() to check whether the key already exists.
+5.If the key already exists, HashMap updates its value; otherwise, it creates a new node and adds it to the bucket's linked list.
+6.By default, HashMap has an initial capacity of 16 and a load factor of 0.75.
+7.When the number of entries exceeds the threshold (capacity × load factor), HashMap usually doubles the array capacity and redistributes the entries.
+8.When a bucket's linked list becomes too long, HashMap can convert it into a Red-Black tree to improve searching performance. In Java 8 and later, treeification generally requires at least 8 nodes and a table capacity of at least 64.
+9.Searching in a linked-list bucket takes O(n) time in the worst case, while searching in a treeified bucket generally takes O(log n) time.
+10.When get(key) is called, HashMap calculates the hash and bucket index, then searches for the matching key.
+11.When remove(key) is called, HashMap finds the matching node and removes it from the bucket.
+12.HashMap allows one null key and multiple null values.
+
+Copy and paste this directly into Notepad for your HashMap internal working diagram.
+
+text
+```
+             INTERNAL WORKING OF HASHMAP
+             ===========================
+
+                    put(10, "A")
+                         |
+                         v
+                 Calculate hashCode()
+                         |
+                         v
+               Calculate Bucket Index
+                         |
+                         v
+              +---------------------+
+              |   HashMap Array     |
+              +---------------------+
+              | Bucket 0            |
+              +---------------------+
+              | Bucket 1            | ---> [10, A] ---> [26, B] ---> null
+              +---------------------+
+              | Bucket 2            |
+              +---------------------+
+              | Bucket 3            | ---> [20, C] ---> null
+              +---------------------+
+              | Bucket 4            |
+              +---------------------+
+              |        ...          |
+              +---------------------+
+              | Bucket 15           |
+              +---------------------+
+
+      Each bucket stores a reference to a node.
+      Multiple keys can map to the same bucket.
+      This is called a HASH COLLISION.
+
+--------------------------------------------------
+              HOW PUT() WORKS
+--------------------------------------------------
+
+1. Calculate the key's hashCode().
+                    |
+                    v
+2. Calculate the bucket index.
+                    |
+                    v
+3. Is the bucket empty?
+       /                    \
+     YES                     NO
+      |                       |
+      v                       v
+ Create a new node      Compare hash and equals()
+      |                       |
+      |                +------+------+
+      |                |             |
+      |           Key exists     Key not found
+      |                |             |
+      |                v             v
+      |          Update value    Create new node
+      |                              |
+      +---------------+--------------+
+                      |
+                      v
+                 Entry stored
+
+--------------------------------------------------
+         LINKED LIST INSIDE A BUCKET
+--------------------------------------------------
+
+Bucket 1
+   |
+   v
++--------+     +--------+     +--------+
+| Key:10 | --> | Key:26 | --> | Key:42 | --> null
+| Val:A  |     | Val:B  |     | Val:C  |
++--------+     +--------+     +--------+
+
+Different keys can have the same bucket index.
+New nodes are added to the bucket's chain.
+
+--------------------------------------------------
+       LINKED LIST TO RED-BLACK TREE
+--------------------------------------------------
+
+Bucket
+   |
+   v
+ [Node 1] ---> [Node 2] ---> [Node 3] ---> ...
+                     |
+                     v
+          If treeification conditions
+                 are satisfied
+                     |
+                     v
+              RED-BLACK TREE
+
+Java 8+:
+- Treeification generally requires 8 nodes
+  in a bucket and table capacity >= 64.
+- Otherwise, HashMap may resize the array.
+- Treeification improves worst-case searching
+  from O(n) to O(log n).
+
+--------------------------------------------------
+                HASHMAP RESIZING
+--------------------------------------------------
+
+Default Initial Capacity = 16
+Default Load Factor      = 0.75
+
+Resize Threshold = Capacity x Load Factor
+
+                  16 x 0.75
+                      |
+                      v
+                 Threshold = 12
+
+When the number of entries exceeds the threshold:
+                      |
+                      v
+             Create a Larger Array
+                      |
+                      v
+           Redistribute Existing Nodes
+                      |
+                      v
+           New Capacity Usually = 32
+
+       16 ------------------------> 32
+             RESIZE + REDISTRIBUTE
+
+--------------------------------------------------
+              HOW get(key) WORKS
+--------------------------------------------------
+
+                  get(10)
+                     |
+                     v
+              Calculate Hash
+                     |
+                     v
+             Calculate Bucket Index
+                     |
+                     v
+              Search Bucket Nodes
+                     |
+                     v
+              Compare Using equals()
+                     |
+                     v
+                Return Value
+
+--------------------------------------------------
+              IMPORTANT POINTS
+--------------------------------------------------
+
+- HashMap stores key-value pairs.
+- Keys must be unique; values can be duplicated.
+- One null key and multiple null values are allowed.
+- Average put(), get(), remove() = O(1).
+- Linked-list worst-case search = O(n).
+- Treeified bucket search = generally O(log n).
+- HashMap is not synchronized by default.
+```
