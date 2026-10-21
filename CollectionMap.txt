@@ -199,4 +199,12 @@ When the number of entries exceeds the threshold:
 - Linked-list worst-case search = O(n).
 - Treeified bucket search = generally O(log n).
 - HashMap is not synchronized by default.
+
+
+LinkedHashMap : 
+1.main insertion order.
+2.user doubly linked list.
+3.In contuctor we can pass access order true to get most recent used entries.
+4.NO thread safe
+
 ```
