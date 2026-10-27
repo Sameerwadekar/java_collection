@@ -19,6 +19,7 @@ HashMap:
 9.In modern Java implementations, heavily populated buckets can be converted from linked nodes to balanced trees under certain conditions.
 10.Default initial capacity is 16, and the default load factor is 0.75.
 11.When the threshold is exceeded, the hash table typically resizes, usually doubling its capacity.
+12.can have null values but only one null key.
 
 Internal Working of HashMap
 1.When put(key, value) is called, HashMap calculates the key's hashCode().
@@ -202,9 +203,24 @@ When the number of entries exceeds the threshold:
 
 
 LinkedHashMap : 
-1.main insertion order.
+1.maintain insertion order.
 2.user doubly linked list.
 3.In contuctor we can pass access order true to get most recent used entries.
 4.NO thread safe
 
-```
+sorted map :  
+1. interface which inherit Map common implementation tree map.
+2. Thing in sorting order either natural sorting or use comparator.
+
+hashtabel : 
+1. No key and value should be null.
+2. legacy class now replaced with concurrentHashMap and it is syncronise meaning thread safe.
+3. for all storing and all it work same hash map and all.
+
+con-current hashmap:
+1.synchornise better than hashtabel
+2.After java  7 there is segment based locking 16 segment which divide long hash map into smaller hash map each map had it its locking system.
+3.read operation no lock write operation lock.
+4.after java 8 there is no segmentation insted it uses compare and swap approach means it read the value from step 1 and when writing if value is changed then only add else dont update.
+5.no locking expect resizing and collision. 
+ 
